@@ -1,0 +1,4 @@
+keytool -import -storetype jks -keystore truststore.jks -storepass changeit -alias localhost -file localhost.pem
+
+
+keytool -v -list -keystore truststore.jks -storepass changeit

@@ -1,0 +1,4 @@
+keytool -genkeypair -alias localhost -keyalg RSA -keysize 2048 -storetype jks -keystore localhost.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=localhost,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN"
+
+
+keytool -v -list -keystore localhost.jks -storepass changeit
