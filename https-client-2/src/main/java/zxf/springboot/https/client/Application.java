@@ -12,9 +12,10 @@ public class Application {
     }
 
     @PostConstruct
-    public void setupTrustStore(){
-        System.setProperty("javax.net.ssl.trustStore","./src/main/resources/keystore/truststore.jks");
-        System.setProperty("javax.net.ssl.trustStoreType","JKS");
-        System.setProperty("javax.net.ssl.trustStorePassword","changeit");
+    public void setupTrustStore() {
+        //Don't support classpath based filepath
+        System.setProperty("javax.net.ssl.trustStore", "./src/main/resources/keystore/truststore.jks");
+        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
+        System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
     }
 }
