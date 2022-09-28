@@ -1,4 +1,16 @@
-keytool -genkeypair -alias localhost -keyalg RSA -keysize 2048 -storetype jks -keystore localhost.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=localhost,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN"
-
+keytool -genkeypair -alias localhost -keyalg RSA -keysize 2048 -storetype jks -keystore localhost.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=localhost,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN" -ext "SAN=IP:127.0.0.1,DNS:localhost"
 
 keytool -v -list -keystore localhost.jks -storepass changeit
+
+-dname
+CN - Common Name
+O  - Organization
+OU - Organizational Unit
+L  - City or Locality
+ST - State or Province
+C  - The two-letter country code
+
+-ext SAN(SubjectAltName)
+IP    - List of IP address of your server
+DNS   - List of DNS names of your server
+EMAIL - List of emails
