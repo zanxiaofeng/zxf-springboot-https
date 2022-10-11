@@ -8,6 +8,9 @@ import zxf.springboot.https.client.http.OkHttpClientFactory;
 
 public class Application {
     public static void main(String[] args) {
+        System.setProperty("javax.net.debug", "all");
+        System.setProperty("java.security.debug", "all");
+
         try {
             System.out.println("*****Https Server with safe OkHttpClient:");
             OkHttpClient okHttpClient = OkHttpClientFactory.getSafeOkHttpClient();
