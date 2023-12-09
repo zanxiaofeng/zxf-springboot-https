@@ -1,0 +1,11 @@
+# Key Classes
+- javax.net.ssl.SSLContext
+- org.apache.http.ssl.SSLContextBuilder;
+- org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+- org.apache.http.client.HttpClient[interface]
+- org.apache.http.impl.client.HttpClients[facade]
+- org.springframework.http.client.ClientHttpRequestFactory
+- org.springframework.http.client.InterceptingClientHttpRequestFactory[delegate]
+- org.springframework.http.client.HttpComponentsClientHttpRequestFactory[apache http client]
+- org.springframework.http.client.OkHttp3ClientHttpRequestFactory[OkHttp]
+- org.springframework.http.client.SimpleClientHttpRequestFactory
