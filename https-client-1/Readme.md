@@ -1,5 +1,7 @@
 # Key Classes
 - javax.net.ssl.SSLContext
+- javax.net.ssl.KeyManagerFactory
+- javax.net.ssl.TrustManagerFactory
 - org.apache.http.ssl.SSLContextBuilder;
 - org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 - org.apache.http.client.HttpClient[interface]
