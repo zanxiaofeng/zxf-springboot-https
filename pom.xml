@@ -18,6 +18,7 @@
 
     <modules>
         <module>https-server</module>
+        <module>https-server-client-auth</module>
         <module>https-client-1</module>
         <module>https-client-2</module>
         <module>https-client-3</module>

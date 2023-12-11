@@ -2,6 +2,8 @@
 - javax.net.ssl.SSLContext
 - javax.net.ssl.KeyManagerFactory
 - javax.net.ssl.TrustManagerFactory
+- javax.net.ssl.HostnameVerifier
+- javax.net.ssl.SSLSocketFactory
 - org.apache.http.ssl.SSLContextBuilder;
 - org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 - org.apache.http.client.HttpClient[interface]

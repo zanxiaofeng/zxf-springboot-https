@@ -1,0 +1,20 @@
+# 生成服务端密钥文件localhost.jks
+keytool -genkeypair -alias localhost  -keyalg RSA -keysize 2048 -storetype jks -keystore localhost.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=localhost,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN" -ext "SAN=IP:127.0.0.1,DNS:localhost"
+
+# 导出服务端的cert文件
+keytool -export -alias localhost -file localhost.cer -keystore localhost.jks
+
+# 生成客户端的密钥文件client.jks
+keytool -genkeypair -alias client -keyalg RSA -keysize 2048 -storetype jks -keystore client.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=client,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN"
+
+# 导出客户端的cert文件
+keytool -export -alias client -file client.cer -keystore client.jks
+
+# 把客户端的cert导入到服务端
+keytool -import -alias client -file client.cer -keystore localhost.jks
+
+# 把服务端的cert导入到客户端
+keytool -import -alias localhost -file localhost.cer -keystore client.jks
+
+# 检验服务端是否具有自己的private key和客户端的cert
+keytool -list -keystore localhost.jks
