@@ -1,18 +1,38 @@
-# 生成服务端密钥文件localhost.jks
-keytool -genkeypair -alias localhost  -keyalg RSA -keysize 2048 -storetype jks -keystore localhost.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=localhost,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN" -ext "SAN=IP:127.0.0.1,DNS:localhost"
+# 生成服务端密钥文件keystore-server.jks
+keytool -genkeypair -alias localhost  -keyalg RSA -keysize 2048 -storetype jks -keystore keystore-server.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=localhost,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN" -ext "SAN=IP:127.0.0.1,DNS:localhost"
 
 # 导出服务端的cert文件
-keytool -export -alias localhost -file localhost.cer -keystore localhost.jks
+keytool -export -alias localhost -file localhost.cer -keystore keystore-server.jks -storepass changeit
 
 # 把服务端的cert导入到客户端
-keytool -import -alias localhost -file localhost.cer -keystore trust-store-client.jks
+keytool -import -alias localhost -file localhost.cer -keystore trust-store-client.jks -storepass changeit
 
+# list
+keytool -v -list -keystore keystore-server.jks -storepass changeit
+keytool -v -list -keystore trust-store-client.jks -storepass changeit
 
-# 生成客户端的密钥文件client.jks
-keytool -genkeypair -alias client -keyalg RSA -keysize 2048 -storetype jks -keystore client.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=client,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN"
+# 生成客户端的密钥文件keystore-client.jks
+keytool -genkeypair -alias client -keyalg RSA -keysize 2048 -storetype jks -keystore keystore-client.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=client,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN"
 
 # 导出客户端的cert文件
-keytool -export -alias client -file client.cer -keystore client.jks
+keytool -export -alias client -file client.cer -keystore keystore-client.jks -storepass changeit
 
 # 把客户端的cert导入到服务端
-keytool -import -alias client -file client.cer -keystore trust-store-server.jks
+keytool -import -alias client -file client.cer -keystore trust-store-server.jks -storepass changeit
+
+# list
+keytool -v -list -keystore keystore-client.jks -storepass changeit
+keytool -v -list -keystore trust-store-server.jks -storepass changeit
+
+-dname
+CN - Common Name
+O  - Organization
+OU - Organizational Unit
+L  - City or Locality
+ST - State or Province
+C  - The two-letter country code
+
+-ext SAN(SubjectAltName)
+IP    - List of IP address of your server
+DNS   - List of DNS names of your server
+EMAIL - List of emails

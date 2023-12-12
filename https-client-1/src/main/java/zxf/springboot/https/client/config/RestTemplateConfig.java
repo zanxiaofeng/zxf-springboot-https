@@ -16,14 +16,27 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 @Configuration
 public class RestTemplateConfig {
+    @Value("${key.store}")
+    private Resource keyStore;
+    @Value("${key.store.password}")
+    private String keyStorePassword;
     @Value("${trust.store}")
     private Resource trustStore;
     @Value("${trust.store.password}")
     private String trustStorePassword;
+
+    @Bean
+    public RestTemplate restTemplateWithKeyStoreAndTrustStore() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, UnrecoverableKeyException {
+        SSLContext sslContext = new SSLContextBuilder().loadKeyMaterial(keyStore.getURL(), keyStorePassword.toCharArray(), keyStorePassword.toCharArray())
+                .loadTrustMaterial(trustStore.getURL(), trustStorePassword.toCharArray()).build();
+        HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext)).build();
+        return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+    }
 
     @Bean
     public RestTemplate restTemplateWithTrustStore() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {

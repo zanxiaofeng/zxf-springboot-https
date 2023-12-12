@@ -1,6 +1,1 @@
-# Please note: this command only import the first cert in the cert file
-keytool -import -storetype jks -keystore truststore.jks -storepass changeit -alias localhost -file localhost.pem
-
-keytool -v -list -keystore truststore.jks -storepass changeit
-
 # In trust store we only need to include all CA certs in a cert chain. We do not need to include the cert of the website except  the cert is self-signed and no CA.

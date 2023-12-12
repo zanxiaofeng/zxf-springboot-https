@@ -10,6 +10,6 @@ public class HomeController {
 
     @GetMapping
     public String home() {
-        return "Welcome to Https Server";
+        return "Welcome to Https Server With Client Auth";
     }
 }

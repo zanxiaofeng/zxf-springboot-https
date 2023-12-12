@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 
 public class OkHttpClientFactory {
-    private static String TRUST_STORE_PATH = "keystore/truststore.jks";
+    private static String TRUST_STORE_PATH = "keystore/trust-store-client.jks";
     private static String TRUST_STORE_PASS_PHRASE = "changeit";
 
     public static OkHttpClient getSafeOkHttpClient() {
