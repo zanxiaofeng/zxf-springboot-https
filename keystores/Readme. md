@@ -5,11 +5,11 @@ keytool -genkeypair -alias localhost  -keyalg RSA -keysize 2048 -storetype jks -
 keytool -export -alias localhost -file localhost.cer -keystore keystore-server.jks -storepass changeit
 
 # 把服务端的cert导入到客户端
-keytool -import -alias localhost -file localhost.cer -keystore trust-store-client.jks -storepass changeit
+keytool -import -alias localhost -file localhost.cer -keystore truststore-client.jks -storepass changeit
 
 # list
 keytool -v -list -keystore keystore-server.jks -storepass changeit
-keytool -v -list -keystore trust-store-client.jks -storepass changeit
+keytool -v -list -keystore truststore-client.jks -storepass changeit
 
 # 生成客户端的密钥文件keystore-client.jks
 keytool -genkeypair -alias client -keyalg RSA -keysize 2048 -storetype jks -keystore keystore-client.jks -validity 3650 -storepass changeit -keypass changeit -dname "CN=client,OU=ZXF,O=ZXF,L=XI'AN,ST=SHAN XI,C=CN"
@@ -18,11 +18,11 @@ keytool -genkeypair -alias client -keyalg RSA -keysize 2048 -storetype jks -keys
 keytool -export -alias client -file client.cer -keystore keystore-client.jks -storepass changeit
 
 # 把客户端的cert导入到服务端
-keytool -import -alias client -file client.cer -keystore trust-store-server.jks -storepass changeit
+keytool -import -alias client -file client.cer -keystore truststore-server.jks -storepass changeit
 
 # list
 keytool -v -list -keystore keystore-client.jks -storepass changeit
-keytool -v -list -keystore trust-store-server.jks -storepass changeit
+keytool -v -list -keystore truststore-server.jks -storepass changeit
 
 -dname
 CN - Common Name

@@ -1,3 +1,8 @@
+# Test
+- curl -k -vvvv http://localhost:8088/test/trust-client-auth
+- curl -k -vvvv http://localhost:8088/test/trust
+- curl -k -vvvv http://localhost:8088/test/no-trust
+
 # Key Classes
 - javax.net.ssl.SSLContext
 - javax.net.ssl.KeyManagerFactory

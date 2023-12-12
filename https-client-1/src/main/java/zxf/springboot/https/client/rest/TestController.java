@@ -2,6 +2,7 @@ package zxf.springboot.https.client.rest;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,12 +12,15 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/test")
 public class TestController {
     @Autowired
+    @Qualifier("restTemplateWithTrustStore")
     private RestTemplate restTemplateWithTrustStore;
 
     @Autowired
+    @Qualifier("restTemplateWithoutTrustStore")
     private RestTemplate restTemplateWithoutTrustStore;
 
     @Autowired
+    @Qualifier("restTemplateWithKeyStoreAndTrustStore")
     private RestTemplate restTemplateWithKeyStoreAndTrustStore;
 
     @GetMapping("/trust-client-auth")
@@ -24,7 +28,7 @@ public class TestController {
         StringBuffer stringBuffer = new StringBuffer();
         try {
             stringBuffer.append("Https Server with trust store and client auth:\n");
-            stringBuffer.append(restTemplateWithTrustStore.getForObject("https://localhost:8082/home", String.class));
+            stringBuffer.append(restTemplateWithKeyStoreAndTrustStore.getForObject("https://localhost:8082/home", String.class));
         } catch (Throwable ex) {
             stringBuffer.append(ExceptionUtils.getStackTrace(ex));
         }
