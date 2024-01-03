@@ -1,0 +1,9 @@
+# JKS && P12
+## JKS -> P12
+- keytool -importkeystore -srckeystore keystore-client.jks -srcstoretype JKS -deststoretype PKCS12 -destkeystore keystore-client.p12 -srcstorepass changeit -deststorepass  changeit
+## P12 -> JKS
+- keytool -importkeystore -srckeystore keystore-client.p12 -srcstoretype PKCS12 -deststoretype JKS -destkeystore keystore-client.jks -srcstorepass changeit -deststorepass  changeit
+
+# Export cert and key from P12
+- openssl pkcs12 -in keystore-client.p12 -out client.key.pem -nocerts
+- openssl pkcs12 -in keystore-client.p12 -out client.crt.pem -nokeys
