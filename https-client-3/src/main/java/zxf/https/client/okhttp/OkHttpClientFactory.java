@@ -1,4 +1,4 @@
-package zxf.springboot.https.client.http;
+package zxf.https.client.okhttp;
 
 import okhttp3.OkHttpClient;
 

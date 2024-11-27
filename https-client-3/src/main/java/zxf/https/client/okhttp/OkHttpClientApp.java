@@ -1,11 +1,10 @@
-package zxf.springboot.https.client;
+package zxf.https.client.okhttp;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import zxf.springboot.https.client.http.OkHttpClientFactory;
 
-public class Application {
+public class OkHttpClientApp {
     public static void main(String[] args) {
         //System.setProperty("javax.net.debug", "all");
         //System.setProperty("java.security.debug", "all");
