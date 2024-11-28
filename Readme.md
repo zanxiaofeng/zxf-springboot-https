@@ -21,3 +21,7 @@
 - echo -n | openssl s_client -connect www.example.com:443 -servername www.example.com | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > cert.pem
 ## Decode PEM encoded certificate file
 - openssl x509 -in cert.pem -text -noout
+
+# 如何知道一个Jar包所用的日志系统，比如apache httpclient
+- 查看jar包的pom.xml中直接依赖的日志系统，当然也有可能是依赖的依赖。
+- 查看代码。
