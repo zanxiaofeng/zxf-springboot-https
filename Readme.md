@@ -25,3 +25,6 @@
 # 如何知道一个Jar包所用的日志系统，比如apache httpclient
 - 查看jar包的pom.xml中直接依赖的日志系统，当然也有可能是依赖的依赖。
 - 查看代码。
+
+# How to set http/https/socket proxy in java
+- https://docs.oracle.com/javase/8/docs/api/java/net/doc-files/net-properties.html
