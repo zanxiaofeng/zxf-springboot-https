@@ -12,7 +12,7 @@ public class ApacheClientApp {
     public static void main(String[] args) throws Exception {
         //System.setProperty("javax.net.debug", "all");
         //System.setProperty("java.security.debug", "all");
-        //System.setProperty("org.apache.commons.logging.diagnostics.dest", "STDOUT");
+        System.setProperty("org.apache.commons.logging.diagnostics.dest", "STDOUT");
         testClientCert("https://localhost:8082/home", "/keystore/keystore-client.p12", "/keystore/truststore-client.p12", "changeit");
     }
 
