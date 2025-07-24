@@ -8,5 +8,4 @@ classes/
 target/
 out/
 .DS_Store
-*.log
 .shelf/
