@@ -1,9 +1,11 @@
 package zxf.springboot.https.client.config;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
+import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,16 +34,26 @@ public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplateWithKeyStoreAndTrustStore() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, UnrecoverableKeyException {
-        SSLContext sslContext = new SSLContextBuilder().loadKeyMaterial(keyStore.getURL(), keyStorePassword.toCharArray(), keyStorePassword.toCharArray())
+        SSLContext sslContext = SSLContextBuilder.create()
+                .loadKeyMaterial(keyStore.getURL(), keyStorePassword.toCharArray(), keyStorePassword.toCharArray())
                 .loadTrustMaterial(trustStore.getURL(), trustStorePassword.toCharArray()).build();
-        HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext)).build();
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setConnectionManager(org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder.create()
+                        .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext))
+                        .build())
+                .build();
         return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
     }
 
     @Bean
     public RestTemplate restTemplateWithTrustStore() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(trustStore.getURL(), trustStorePassword.toCharArray()).build();
-        HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext)).build();
+        SSLContext sslContext = SSLContextBuilder.create()
+                .loadTrustMaterial(trustStore.getURL(), trustStorePassword.toCharArray()).build();
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setConnectionManager(org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder.create()
+                        .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext))
+                        .build())
+                .build();
         return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
     }
 
