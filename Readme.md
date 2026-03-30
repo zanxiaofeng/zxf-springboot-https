@@ -28,3 +28,18 @@
 
 # How to set http/https/socket proxy in java
 - https://docs.oracle.com/javase/8/docs/api/java/net/doc-files/net-properties.html
+
+
+# SSL Supports(Protocol, Cipher Suites, Certs, CAs)
+## Server side
+- nmap --script ssl-enum-ciphers -p 443 www.google.com
+
+## Client side
+### Openssl
+
+### Curl
+
+### JDK
+
+
+## Connectivity testing
