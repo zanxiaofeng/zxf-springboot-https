@@ -49,7 +49,7 @@ for version in -tls1_3 -tls1_2 -tls1_1 -tls1; do
     echo "=== Testing $protocol ==="
     
     # Get ciphers available for this protocol
-    ciphers=$(openssl ciphers 'ALL:eNULL' $version 2>/dev/null | tr ':' ' ')
+    ciphers=$(openssl ciphers $version 'ALL:eNULL' 2>/dev/null | tr ':' ' ')
     
     for cipher in $ciphers; do
         result=$(openssl s_client -connect "$host:$port" $version -cipher "$cipher" </dev/null 2>/dev/null)
@@ -82,40 +82,37 @@ import javax.net.ssl.*;
 import java.net.*;
 import java.util.*;
 
-public class TlsCipherEnum {
-    
-    private static final Map<String, String> PROTOCOL_MAP = Map.of(
-        "TLSv1.3", "TLSv1.3",
-        "TLSv1.2", "TLSv1.2", 
-        "TLSv1.1", "TLSv1.1",
-        "TLSv1", "TLSv1"
-    );
+public class EnumTlsCiphers {
+    private static final List<String> PROTOCOLS = List.of("TLSv1.3", "TLSv1.2", "TLSv1.1", "TLSv1");
 
     public static void main(String[] args) throws Exception {
-        String host = "example.com";
+        String host = "www.163.com";
         int port = 443;
 
-        for (Map.Entry<String, String> entry : PROTOCOL_MAP.entrySet()) {
-            String protocolName = entry.getKey();
-            String protocolValue = entry.getValue();
-            
-            System.out.println("=== " + protocolValue + " ===");
-            
+        for (String protocol : PROTOCOLS) {
+            System.out.println("=== " + protocol + " ===");
+
             try {
-                SSLContext ctx = SSLContext.getInstance(protocolName);
+                SSLContext ctx = SSLContext.getInstance(protocol);
                 ctx.init(null, new TrustManager[]{new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() { return null; }
-                    public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {}
-                    public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {}
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                    }
                 }}, new java.security.SecureRandom());
 
                 SSLSocketFactory factory = ctx.getSocketFactory();
                 String[] supportedCiphers = factory.getSupportedCipherSuites();
-                
+
                 boolean anySupported = false;
                 for (String cipher : supportedCiphers) {
                     try (SSLSocket socket = (SSLSocket) factory.createSocket(host, port)) {
-                        socket.setEnabledProtocols(new String[]{protocolValue});
+                        socket.setEnabledProtocols(new String[]{protocol});
                         socket.setEnabledCipherSuites(new String[]{cipher});
                         socket.setSoTimeout(5000);
                         socket.startHandshake();
@@ -125,27 +122,16 @@ public class TlsCipherEnum {
                         // Handshake failed — cipher not supported for this protocol
                     }
                 }
-                
+
                 if (!anySupported) {
                     System.out.println(" (No ciphers supported or protocol disabled)");
                 }
-                
             } catch (Exception e) {
                 System.out.println(" Protocol not available in this JVM");
             }
         }
     }
 }
-```
-
-Maven dependency (if you need to run standalone):
-
-```xml
-<dependency>
-    <groupId>org.bouncycastle</groupId>
-    <artifactId>bcprov-jdk18on</artifactId>
-    <version>1.78</version>
-</dependency>
 ```
 
 6. One-Liner Summary with OpenSSL
